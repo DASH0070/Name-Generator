@@ -60,8 +60,11 @@ const btnClick = (e: MouseEvent, key: string) => {
 
 const selectedNames = ref<string[]>([]);
 const generateNames = (e: MouseEvent) => {
+    selectedNames.value = [];
     for (let i = 0; i < names.length; i++) {
-        if (names[i].gender === option.value.gender && names[i].length === option.value.length && names[i].popularity === option.value.popularity)
+        if (names[i].gender === option.value.gender &&
+            (option.value.length === Length.ALL || names[i].length === option.value.length) &&
+            names[i].popularity === option.value.popularity)
             selectedNames.value.push(names[i].name);
     }
     return e;
@@ -82,7 +85,8 @@ const generateNames = (e: MouseEvent) => {
                 </button>
             </div>
             <button @click="(e: MouseEvent) => generateNames(e)"
-                class="bg-red-700 text-white w-52 h-12 rounded-full mt-12 text-xl tracking-wide uppercase">Generate Names</button>
+                class="bg-red-700 text-white w-52 h-12 rounded-full mt-12 text-xl tracking-wide uppercase">Generate
+                Names</button>
         </div>
         <ul class="flex justify-center gap-8 flex-wrap my-8">
             <li class="text-red-400 text-xl" v-for="names in selectedNames" :key="names">{{names}}</li>
